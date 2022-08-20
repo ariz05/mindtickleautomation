@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="MindleTickleAPITest">
+
+    <test name="API test for User APIs">
+        <classes>
+            <class name="com.framework.testCases.user.TC_CreateUsers"/>
+            <class name="com.framework.testCases.user.TC_UpdateUserDetails"/>
+            <class name="com.framework.testCases.user.TC_GetUserDetails"/>
+        </classes>
+    </test>
+
+    <test name="API test for Pet APIs">
+        <classes>
+            <class name="com.framework.testCases.pet.TC_AddPet"/>
+            <class name="com.framework.testCases.pet.TC_Update_PetDetails"/>
+            <class name="com.framework.testCases.pet.TC_GetPetDetails"/>
+        </classes>
+    </test>
+
+</suite>
