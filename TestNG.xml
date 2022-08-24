@@ -3,11 +3,24 @@
 
 <suite name="MindleTickleAPITest">
 
+    <listeners>
+        <listener class-name="com.framework.utilities.ReportListener"/>
+    </listeners>
+
+    <test name="Unit test suite for automation scripts">
+        <classes>
+            <class name="com.framework.test.services.ApiHelperTest"/>
+            <class name="com.framework.test.services.ServiceHelperTest"/>
+        </classes>
+    </test>
+
     <test name="API test for User APIs">
         <classes>
             <class name="com.framework.testCases.user.TC_CreateUsers"/>
             <class name="com.framework.testCases.user.TC_UpdateUserDetails"/>
             <class name="com.framework.testCases.user.TC_GetUserDetails"/>
+            <class name="com.framework.testCases.user.TC_EndToEnd"/>
+
         </classes>
     </test>
 

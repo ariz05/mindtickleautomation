@@ -1,7 +1,7 @@
 package com.framework.dtos.requests.pet;
 
-
 import com.fasterxml.jackson.annotation.*;
+
 import javax.annotation.processing.Generated;
 import java.util.HashMap;
 import java.util.Map;

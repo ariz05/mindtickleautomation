@@ -1,15 +1,15 @@
 #### MindTickle Automation Project
 
-This project contains code base for MindTickle automation assignment.Under this, we are writing end to end automated tests for user and pet functionality.
+This project contains code base for MindTickle automation assignment.Under this, we are writing end to end automated tests for user and pet functionality along with unit tests to test automated scripts.
 
 
 ### **Built With**
 
 * Maven - Dependency management
 * TestNG - Testing framework
-* Extent Reports - Reporting framework
+* Allure Reports - Reporting framework
 * Scripting Language- Java
-* Unit test - Junit framework
+* Unit tests - TestNG and Mockito framework
 
 
 ## Local development environment Setup
@@ -28,9 +28,8 @@ This project contains code base for MindTickle automation assignment.Under this,
                 
 
 #### **Execution without using maven maven commands -**
-    1. If userDto choose to execute the project without maven, it can certainly be done by right clicking on the TestNg.xml file under project root directory. 
-    2. Click on 'Run TestNg.xml'
-    3. All that you need to ensure before running is the configuration of the TestNg.xml file for the following parameters - > browser = chrome (current state) 
+    1. If user choose to execute the project without maven, it can certainly be done by right clicking on the TestNg.xml file under project root directory. 
+    2. Click on 'Run TestNg.xml' 
 
 
 
@@ -40,7 +39,6 @@ This project contains code base for MindTickle automation assignment.Under this,
 
     1. Pull the code from github using command "git clone https://github.com/ariz05/mindtickleautomation.git"
     2. To run the test,point Maven to the project and use the goals:
-	   - clean install 
        - clean test
 
 
@@ -54,9 +52,8 @@ This project contains code base for MindTickle automation assignment.Under this,
 |Maven             -> Is a build tool used internally to run the build and validate the build status.|
 |Scripting         -> Java language used for writing scripts.|
 |Java.net          -> Library used for writing the automation scripts for APIs|
-|TestNG            -> For test case management|
+|TestNG            -> For managing integration tests and unit tests|
 |Extent Reports    -> To generate a detailed and userDto-friendly report with some good aesthetics.|
-
 
 
 
@@ -70,10 +67,7 @@ This project contains code base for MindTickle automation assignment.Under this,
            - Allure Reports from qameta
            - Source-directory/allure-results/allure-report.html
            After execution - open cmd and run command - 'allure serve source-directory-path\allure-results'
-      2.Extent Reports – Used for generating  html  execution reports. Our framework supports some extensive reports like -  
-           - Extent Reports from Aventstack
-                - test-output/Test-Report-<TimeStamp>.html
-      3.Default Surefire report (HTML Only)
+      2.Default Surefire report (HTML Only)
                 - target/surefire/index.html	
        
 		 
@@ -110,7 +104,7 @@ This project contains code base for MindTickle automation assignment.Under this,
 		              Utilities   - contains different java classes which has some common utility methods that can be used across the framework to perform similar 
                                       tasks at different steps.
 
-7. test-output   ->    Directory is created at runtime to store latest extent reports files. It is deleted when we run maven clean goal using maven clean plugin. 
+7. allure-results ->   Directory contains allure report config files.
 
 
  
@@ -118,5 +112,7 @@ This project contains code base for MindTickle automation assignment.Under this,
 
 * Jenkins tool integration for continuous integration.
 * Allure report integration with jenkins using plugin.
-* Mutiple environment support to run the suite on QA/Non-prod/prod environments.   		 
+* Mutiple environment support to run the suite on QA/Non-prod/prod environments.
+* Code coverage can be improved by adding some more unit tests.
+* More end to end test scenarios can be designed and added to improve quality.   		 
            

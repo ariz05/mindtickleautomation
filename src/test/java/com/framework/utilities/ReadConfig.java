@@ -21,8 +21,7 @@ public class ReadConfig {
     }
 
     public String getApplicationURL() {
-        String url = pro.getProperty("baseURL");
-        return url;
+        return pro.getProperty("baseURL");
     }
 
 

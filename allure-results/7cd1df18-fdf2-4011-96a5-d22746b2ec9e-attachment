@@ -1,0 +1,1 @@
+API Response : {"id":20002,"category":{"id":2,"name":"Dobermann"},"name":"doggie02","photoUrls":["https://www.dobermann/snap001.jpeg","https://www.dobermann/snap002.jpeg"],"tags":[{"id":1235,"name":"tag02"}],"status":"available"}

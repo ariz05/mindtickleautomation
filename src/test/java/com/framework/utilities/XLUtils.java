@@ -5,7 +5,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +22,7 @@ public class XLUtils {
             FileInputStream fis = new FileInputStream(file);
             wb = new XSSFWorkbook(fis);
         } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
     }
@@ -41,8 +41,6 @@ public class XLUtils {
                 }
                 lst.add(hMap);
 
-            } else {
-                continue;
             }
 
         }
@@ -57,7 +55,7 @@ public class XLUtils {
     }
 
 
-    public Object[][] getTestData(String sheetName, String testCaseName) throws IOException {
+    public Object[][] getTestData(String sheetName, String testCaseName) {
         XLUtils xUtils = new XLUtils();
         List<HashMap<String, String>> lst = xUtils.readExcelData(sheetName, testCaseName);
         int lstSize = lst.size();

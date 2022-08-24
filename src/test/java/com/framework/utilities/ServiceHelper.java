@@ -1,11 +1,5 @@
 package com.framework.utilities;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.framework.dtos.requests.pet.PetDto;
-import com.framework.dtos.requests.user.UserDto;
-import com.framework.dtos.responses.user.CreateUserResponseDto;
 import com.framework.helpers.PetsHelper;
 import com.framework.helpers.UsersHelper;
 import com.framework.testCases.pet.PetDetails;
@@ -20,12 +14,8 @@ import static com.framework.utilities.CommonUtils.assertFields;
 public class ServiceHelper {
     String userName;
     String endPointUrl = null;
-    String responseString;
-    ObjectMapper objectMapper = new ObjectMapper();
-    String requestString;
-    CreateUserResponseDto createUserResponseDto;
-    List<PetDto> petDetailsResponseDto;
-    UserDto userDto;
+    public String responseString = null;
+    public String requestString = null;
     String status;
     Long id;
 
@@ -39,9 +29,8 @@ public class ServiceHelper {
             case "CreateUsers":
                 userDetails = new UserDetails();
                 requestString = userDetails.setUserDetails(requestFields);
+                //Helper.stepLog("pass", "Create User API Request payload : " + requestString);
                 //System.out.println(requestString);
-                Helper.stepLog("pass", "Create User API Request payload : " + requestString);
-
                 break;
 
             //Request payload creation for user Update API
@@ -49,7 +38,6 @@ public class ServiceHelper {
                 userName = requestFields.get(0).get("userName");
                 userDetails = new UserDetails();
                 requestString = userDetails.setUserDetails(requestFields.get(0));
-                Helper.stepLog("pass", "Create User API Request payload : " + requestString);
                 //System.out.println(requestString);
                 break;
 
@@ -76,56 +64,60 @@ public class ServiceHelper {
                 status = requestFields.get(0).get("status");
                 break;
 
+            default:
+                System.out.println("Invalid Payload creation request case provided.");
+
 
         }
     }
 
 
     //To invoke API(s) request
-    public void submitRequest(String baseUrl, String endPoint, String method, ApiHelper apiHelper) throws JsonProcessingException {
-        endPointUrl = baseUrl + endPoint;
-        switch (endPoint + ":" + method) {
+    public void submitRequest(String baseUrl, String endPoint, String method, ApiHelper apiHelper) {
+        try {
+            endPointUrl = baseUrl + endPoint;
+            switch (endPoint + ":" + method) {
 
-            // Submitting POST request to create users
-            case "/v2/user/createWithArray:POST":
-                responseString = apiHelper.submitPostRequest(endPointUrl, requestString);
-                createUserResponseDto = new CreateUserResponseDto();
-                createUserResponseDto = objectMapper.readValue(responseString, CreateUserResponseDto.class);
-                break;
+                // Submitting POST request to create users
+                case "/v2/user/createWithArray:POST":
+                    responseString = apiHelper.submitPostRequest(endPointUrl, requestString);
+                    break;
 
-            // Submitting PUT request to update user.
-            case "/v2/user/:PUT":
-                endPointUrl = endPointUrl + userName;
-                responseString = apiHelper.submitPutRequest(endPointUrl, requestString);
-                createUserResponseDto = new CreateUserResponseDto();
-                createUserResponseDto = objectMapper.readValue(responseString, CreateUserResponseDto.class);
-                break;
+                // Submitting PUT request to update user.
+                case "/v2/user/:PUT":
+                    endPointUrl = endPointUrl + userName;
+                    responseString = apiHelper.submitPutRequest(endPointUrl, requestString);
+                    break;
 
-            // Submitting GET request to fetch user details.
-            case "/v2/user/:GET":
-                endPointUrl = endPointUrl + userName;
-                responseString = apiHelper.submitGetRequest(endPointUrl);
-                userDto = new UserDto();
-                userDto = objectMapper.readValue(responseString, UserDto.class);
-                break;
+                // Submitting GET request to fetch user details.
+                case "/v2/user/:GET":
+                    endPointUrl = endPointUrl + userName;
+                    responseString = apiHelper.submitGetRequest(endPointUrl);
+                    break;
 
-            // Submitting POST request to Add pet details.
-            case "/v2/pet:POST":
-                responseString = apiHelper.submitPostRequest(endPointUrl, requestString);
-                break;
+                // Submitting POST request to Add pet details.
+                case "/v2/pet:POST":
+                    System.out.println("Inside submit request : Add pet details method ");
+                    responseString = apiHelper.submitPostRequest(endPointUrl, requestString);
+                    break;
 
-            // Submitting PUT request to Update pet details.
-            case "/v2/pet:PUT":
-                responseString = apiHelper.submitPutRequest(endPointUrl, requestString);
-                break;
+                // Submitting PUT request to Update pet details.
+                case "/v2/pet:PUT":
+                    System.out.println("Inside submit request : Update pet details method ");
+                    responseString = apiHelper.submitPutRequest(endPointUrl, requestString);
+                    break;
 
-            // Submitting GET request to fetch pet details.
-            case "/v2/pet/findByStatus?status=:GET":
-                endPointUrl = endPointUrl + status;
-                responseString = apiHelper.submitGetRequest(endPointUrl);
-                petDetailsResponseDto = objectMapper.readValue(responseString, new TypeReference<List<PetDto>>() {
-                });
-                break;
+                // Submitting GET request to fetch pet details.
+                case "/v2/pet/findByStatus?status=:GET":
+                    endPointUrl = endPointUrl + status;
+                    responseString = apiHelper.submitGetRequest(endPointUrl);
+                    break;
+
+                default:
+                    System.out.println("Invalid submit request case provided.");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -152,40 +144,49 @@ public class ServiceHelper {
             case "CreateUsers:POST":
                 System.out.println("Inside Create user details API response validation");
                 usersHelper = new UsersHelper();
-                usersHelper.validateCreateUserResponse(requestFields.get(0), createUserResponseDto);
+                usersHelper.validateResponse(requestFields.get(0), responseString);
                 break;
 
             //validate update user API response.
             case "UpdateUser:PUT":
                 System.out.println("Inside Update user details API response validation");
                 usersHelper = new UsersHelper();
-                usersHelper.validateCreateUserResponse(requestFields.get(0), createUserResponseDto);
+                usersHelper.validateResponse(requestFields.get(0), responseString);
                 break;
 
             //validate get user API response.
             case "GetUser:GET":
                 System.out.println("Inside Get user details API response validation");
                 usersHelper = new UsersHelper();
-                usersHelper.validateUserDetails(requestFields.get(0), userDto);
+                if (requestFields.get(0).get("statusCode").equalsIgnoreCase("200")) {
+                    usersHelper.validateUserDetails(requestFields.get(0), responseString);
+                } else {
+                    usersHelper.validateResponse(requestFields.get(0), responseString);
+                }
+
                 break;
 
             //validate Add pet API response.
             case "AddPet:POST":
+                petsHelper = new PetsHelper();
+                petsHelper.validatePetDetails(requestString, responseString);
                 System.out.println("Inside Add pet details API response validation");
-                assertFields("equals", "Add pet Details", requestString, responseString);
+                //assertFields("equals", "Add pet Details", requestString, responseString);
                 break;
 
             //validate Update pet API response.
             case "UpdatePetDetails:PUT":
+                petsHelper = new PetsHelper();
+                petsHelper.validatePetDetails(requestString, responseString);
                 System.out.println("Inside Update pet details API response validation");
-                assertFields("equals", "Update pet Details", requestString, responseString);
+                //assertFields("equals", "Update pet Details", requestString, responseString);
                 break;
 
             //validate get pet API response.
             case "GetPetDetails:GET":
                 System.out.println("Inside Get pet details API response validation");
                 petsHelper = new PetsHelper();
-                petsHelper.validatePetDetailsResponse(requestFields.get(0), petDetailsResponseDto);
+                petsHelper.validatePetDetailsResponse(requestFields.get(0), responseString);
                 break;
         }
     }

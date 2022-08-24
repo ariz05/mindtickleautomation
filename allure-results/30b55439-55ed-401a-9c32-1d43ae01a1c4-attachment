@@ -1,0 +1,1 @@
+Request Payload : {"id":20001,"category":{"id":1,"name":"Labrador Retriever"},"name":"doggie01","photoUrls":["https://www.bulldog/snap001.jpeg","https://www.bulldog/snap002.jpeg"],"tags":[{"id":1234,"name":"tag01"},{"id":1235,"name":"tag02"}],"status":"pending"}
