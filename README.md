@@ -7,7 +7,7 @@ This project contains code base for MindTickle automation assignment.Under this,
 
 * Maven - Dependency management
 * TestNG - Testing framework
-* Allure Reports - Reporting framework
+* Allure Reports - Reporting and Logging framework
 * Scripting Language- Java
 * Unit tests - TestNG and Mockito framework
 
@@ -19,7 +19,7 @@ This project contains code base for MindTickle automation assignment.Under this,
     2. Install Maven from "https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.5.4/"
     3. Set environment variables path for both already installed JDK and Maven. 
     3. Install Git from this location "https://git-scm.com/download/win"
-    4. Download and configure IntelliJ preferebly 2020.2 version to point to the right Java SDK version 11
+    4. Download and configure IntelliJ preferably 2020.2 version to point to the right Java SDK version 11
     5. Configure IntelliJ to point to the right Maven version installed and also ensure maven importing is set to automatic setting.
     6. Make sure to have the Maven IntelliJ plugins installed through market place.
     7. Ensure downloading allure reports binaries and save it on your machine.Set environment path variable for the same. 
@@ -29,7 +29,7 @@ This project contains code base for MindTickle automation assignment.Under this,
 
 #### **Execution without using maven maven commands -**
     1. If user choose to execute the project without maven, it can certainly be done by right clicking on the TestNg.xml file under project root directory. 
-    2. Click on 'Run TestNg.xml' 
+    2. Click on 'Run TestNG.xml' 
 
 
 
@@ -53,7 +53,7 @@ This project contains code base for MindTickle automation assignment.Under this,
 |Scripting         -> Java language used for writing scripts.|
 |Java.net          -> Library used for writing the automation scripts for APIs|
 |TestNG            -> For managing integration tests and unit tests|
-|Extent Reports    -> To generate a detailed and userDto-friendly report with some good aesthetics.|
+|Allure Reports    -> To generate a detailed and user-friendly report with some good aesthetics.|
 
 
 
@@ -65,8 +65,8 @@ This project contains code base for MindTickle automation assignment.Under this,
 #### **Execution Reporting –**
       1.Allure Reports – Used for generating graphical html test execution reports. Our framework supports some extensive reports like -  
            - Allure Reports from qameta
-           - Source-directory/allure-results/allure-report.html
-           After execution - open cmd and run command - 'allure serve source-directory-path\allure-results'
+           - Source-directory/allure-results/
+           After execution - open cmd in the project directory and run command - 'allure serve allure-results'
       2.Default Surefire report (HTML Only)
                 - target/surefire/index.html	
        
@@ -82,13 +82,12 @@ This project contains code base for MindTickle automation assignment.Under this,
 2. Configuration ->   This directory contains config.properties file that keeps property details like baseurl of the environment,etc.
 		             More details can be included and leveraged in future for better parameterization.
 		     
-3. extent-config ->   This file comprises details such as extentreports configuration details like theme,encoding,protocol,document title,report name,test-view chart 
-		             location,etc. being used in report.
+3. allure-results ->   Directory contains allure report config files.
 
 4. pom           ->   This file contains dependencies and plugins used in the project.
 
 5. TestNG.xml    ->   This file contains information about the test suites , test classes and test methods we have written and wants to execute . We can group them according 
-		             our requirement . This contains some parameters as well that are going to be used for applicable test cases during test execution. 
+		              our requirement. 
 
 6. src/test/java ->   This directory contains subdirectories that contains code to perfrom different actions during execution.Subdirectories are below :
  
@@ -96,6 +95,8 @@ This project contains code base for MindTickle automation assignment.Under this,
 
 		              TestCases   - contains test cases for API testing.It has BaseClass which is inherited extended by other tests classes.Comprises
                                       TestNG test cases and flow .  
+                                      
+                      Test   - contains test cases for unit testing of the code written.               
 
                       TestData    - comprises different test data for API testing scenarios under excelsheet TestData.xlsx
                       
@@ -103,9 +104,6 @@ This project contains code base for MindTickle automation assignment.Under this,
 
 		              Utilities   - contains different java classes which has some common utility methods that can be used across the framework to perform similar 
                                       tasks at different steps.
-
-7. allure-results ->   Directory contains allure report config files.
-
 
  
 ### Scope of enhancements
